@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Destination Anywhere</title>
+	<link rel="stylesheet" type="text/css" href="/assets/stylesheets/indexCSS.css" />
+	<link rel="stylesheet" type="text/css" href="/assets/stylesheets/myTripsStyle.css" />
+</head>
+
+<body>
+	<div class="height5">
+		<% include partials/userSpecific_header.ejs %>
+	</div>
+	<div class="container">
+		<div id="navDiv" class="navDiv">
+			<% include partials/user-navigation.ejs %>
+		</div>
+		<div class="content">
+			<% include partials/site-navigation.ejs %>
+			<div class="myTripContent">
+				<div class="margin20 textStyle">You have visited these places.
+				</div>
+				<div>
+					<table style="width: 100%">
+						<tr class="textAlignLeft">
+							<th>Places</th>
+							<th>Category</th>
+							<th>My Rating</th>
+							<th></th>
+						</tr>
+						<tr>
+							<td>
+								<%= query1.itemShortName %>
+							</td>
+							<td>
+								<%= query1.catalogCatagoryName %>
+							</td>
+							<td>
+								<div class="rate<%= query1.rating %>"></div>
+							</td>
+							<td><button class="update" type="button" onclick="location.href = 'http://localhost:8080/viewCatalog/item?itemCode=<%= query1.itemCode %>';">Update</button>
+								<button type="button" class="delete" onclick="location.href = '/myTrip';">Delete</button></td>
+						</tr>
+						<tr>
+							<td>
+								<%= query2.itemShortName %>
+							</td>
+							<td>
+								<%= query2.catalogCatagoryName %>
+							</td>
+							<td>
+								<div class="rate<%= query2.rating %>"></div>
+							</td>
+							<td><button class="update" type="button" onclick="location.href = 'http://localhost:8080/viewCatalog/item?itemCode=<%= query2.itemCode %>';">Update</button>
+								<button type="button" class="delete" onclick="location.href = '/myTrip';">Delete</button></td>
+						</tr>
+						<tr>
+							<td>
+								<%= query3.itemShortName %>
+							</td>
+							<td>
+								<%= query3.catalogCatagoryName %>
+							</td>
+							<td>
+								<div class="rate<%= query3.rating %>"></div>
+							</td>
+							<td><button class="update" type="button" onclick="location.href = 'http://localhost:8080/viewCatalog/item?itemCode=<%= query3.itemCode %>';">Update</button>
+								<button type="button" class="delete" onclick="location.href = '/myTrip';">Delete</button></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<% include partials/footer.ejs %>
+</body>
+
+</html>

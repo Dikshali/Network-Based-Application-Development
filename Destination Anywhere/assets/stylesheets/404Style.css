@@ -1,0 +1,11 @@
+.backcategoryBtn {
+  margin: auto;
+  width: 100%;
+  text-align: center;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+* {
+  text-align: center;
+}

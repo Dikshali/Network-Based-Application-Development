@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Destination Anywhere</title>
+	<link rel="stylesheet" type="text/css" href="/assets/stylesheets/indexCSS.css" />
+	<link rel="stylesheet" type="text/css" href="/assets/stylesheets/itemStyle.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+	<script src="/assets/scripts/rating_script.js"></script>
+	<script src="/assets/scripts/save_script.js"></script>
+</head>
+
+<body>
+	<div class="height5">
+		<% include partials/header.ejs %>
+	</div>
+	<div class="container">
+		<div id="navDiv" class="navDiv">
+			<% include partials/user-navigation.ejs %>
+		</div>
+		<div class="content">
+			<% include partials/site-navigation.ejs %>
+			<div class="itemContent">
+				<div class="flex">
+					<div id="countryId" class="CountryNamehead">
+						<%= query.catalogCatagoryName %>
+					</div>
+					<div class="backcategoryBtn" onclick="location.href='http://localhost:8080/viewCatalog';">
+						Back to Categories
+					</div>
+				</div>
+				<br />
+				<div>
+					<div class="itemInfo">
+						<div class="flex">
+							<div id="eventName" class="eventName">
+								<%= query.itemName %>
+							</div>
+						</div>
+						<br />
+						<div class="eventDetails">
+							<%= query.description %>
+						</div></br>
+						<div class="flex fontB">
+							<div>Duration:
+								<%= query.duration %>&nbsp;days
+							</div>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<div>Cost:
+								<%= query.cost %>
+							</div>
+						</div></br>
+						<div>
+							Rate It:&nbsp;&nbsp;&nbsp;
+							<% include partials/feedback.ejs %>
+						</div><br />
+						<div class="flex">Save It:&nbsp;
+							<div id="unlike" class="unlike" onclick="like(1)"></div>
+							<div id="like" class="like" onclick="like(0)"></div>
+						</div>
+						<div>
+							<div class="images">
+								<div class="divSize centerAlign">
+									<img class="imageSize" src="<%= query.imageUrlList[0] %>" alt="picture" />
+								</div>
+								<div class="divSize centerAlign">
+									<img class="imageSize" src="<%= query.imageUrlList[1] %>" alt="picture" />
+								</div>
+							</div>
+							<div class="centerAlign">
+								<img class="centerImage" src="<%= query.imageUrlList[2] %>" alt="picture" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<% include partials/footer.ejs %>
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Destination Anywhere</title>
+	<link rel="stylesheet" type="text/css" href="/assets/stylesheets/indexCSS.css" />
+	<link rel="stylesheet" type="text/css" href="/assets/stylesheets/categoryStyle.css" />
+	<link href="http://fonts.googleapis.com/css?family=Reenie+Beanie:regular" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+	<div class="height5">
+		<% include partials/header.ejs %>
+	</div>
+	<div class="container">
+		<div id="navDiv" class="navDiv">
+			<% include partials/user-navigation.ejs %>
+		</div>
+		<div class="content">
+			<% include partials/site-navigation.ejs %>
+			<div id="categories">
+				<div class="displayFlex margin50">
+					<img class="countryWH" id='germanyLogo' src="http://localhost:8080/assets/images/<%= query[0].catalogCatagoryName %>.jpg" alt="GermanyLogo" />
+					<div class="todoGermany stickynotes">
+						<div class="fontRB mainH colorBlack">Popular Attraction in
+							<%= query[0].catalogCatagoryName %>
+						</div>
+						<br /> <a class="fontRB colorBlack" href="viewCatalog/item?itemCode=<%= query[0].itemCode %>">&#187;
+							<%= query[0].itemShortName %> </a><br /> <a class="fontRB colorBlack" href="viewCatalog/item?itemCode=<%= query[1].itemCode %>">&#187;
+							<%= query[1].itemShortName %> </a><br /> <a class="fontRB colorBlack" href="viewCatalog/item?itemCode=<%= query[2].itemCode %>">&#187;
+							<%= query[2].itemShortName %> </a>
+
+					</div>
+				</div>
+				<div class="displayFlex margin50">
+					<img class="countryWH" id='dubaiLogo' src="http://localhost:8080/assets/images/<%= query[3].catalogCatagoryName %>.jpg" alt="DubaiLogo" />
+					<div class="todoDubai stickynotes">
+						<div class="fontRB mainH colorBlack">Popular Attraction in
+							<%= query[3].catalogCatagoryName %>
+						</div>
+						<br /> <a class="fontRB colorBlack" href="viewCatalog/item?itemCode=<%= query[3].itemCode %>">&#187;
+							<%= query[3].itemShortName %></a><br /> <a class="fontRB colorBlack" href="viewCatalog/item?itemCode=<%= query[4].itemCode %>">&#187;
+							<%= query[4].itemShortName %></a><br /> <a class="fontRB colorBlack" href="viewCatalog/item?itemCode=<%= query[5].itemCode %>">&#187;
+							<%= query[5].itemShortName %></a>
+					</div>
+				</div>
+				<div class="displayFlex margin50">
+					<img class="countryWH" id='franceLogo' src="http://localhost:8080/assets/images/<%= query[6].catalogCatagoryName %>.jpg" alt="FranceLogo" />
+					<div class="todoFrance stickynotes">
+						<div class="fontRB mainH colorBlack">Popular Attraction in
+							<%= query[6].catalogCatagoryName %>
+						</div>
+						<br /> <a class="fontRB colorBlack" href="viewCatalog/item?itemCode=<%= query[6].itemCode %>">&#187;
+							<%= query[6].itemShortName %>r</a><br /> <a class="fontRB colorBlack" href="viewCatalog/item?itemCode=<%= query[7].itemCode %>">&#187;
+							<%= query[7].itemShortName %></a><br /> <a class="fontRB colorBlack" href="viewCatalog/item?itemCode=<%= query[8].itemCode %>">&#187;
+							<%= query[8].itemShortName %></a>
+					</div>
+				</div>
+				<div class="displayFlex margin50">
+					<img class="countryWH" id='malaysiaLogo' src="http://localhost:8080/assets/images/<%= query[9].catalogCatagoryName %>.jpg" alt="MalaysiaLogo" />
+					<div class="todoMalaysia stickynotes">
+						<div class="fontRB mainH colorBlack">Popular Attraction in
+							<%= query[9].catalogCatagoryName %>
+						</div>
+						<br /> <a class="fontRB colorBlack" href="viewCatalog/item?itemCode=<%= query[9].itemCode %>">&#187;
+							<%= query[9].itemShortName %></a><br /> <a class="fontRB colorBlack" href="viewCatalog/item?itemCode=<%= query[10].itemCode %>">&#187;
+							<%= query[10].itemShortName %></a><br /> <a class="fontRB colorBlack" href="viewCatalog/item?itemCode=<%= query[11].itemCode %>">&#187;
+							<%= query[11].itemShortName %></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<% include partials/footer.ejs %>
+</body>
+
+</html>
