@@ -5,10 +5,6 @@
 	<title>Destination Anywhere</title>
 	<link rel="stylesheet" type="text/css" href="/assets/stylesheets/indexCSS.css" />
 	<link rel="stylesheet" type="text/css" href="/assets/stylesheets/itemStyle.css" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-	<script src="/assets/scripts/rating_script.js"></script>
 	<script src="/assets/scripts/save_script.js"></script>
 </head>
 
@@ -23,12 +19,12 @@
 		<div class="content">
 			<% include partials/site-navigation.ejs %>
 			<div class="itemContent">
+				<div class="pointer backcategoryBtn" onclick="location.href='http://localhost:8080/viewCatalog';">
+					Back to Categories
+				</div>
 				<div class="flex">
 					<div id="countryId" class="CountryNamehead">
 						<%= query.catalogCatagoryName %>
-					</div>
-					<div class="backcategoryBtn" onclick="location.href='http://localhost:8080/viewCatalog';">
-						Back to Categories
 					</div>
 				</div>
 				<br />
@@ -38,6 +34,9 @@
 							<div id="eventName" class="eventName">
 								<%= query.itemName %>
 							</div>
+						</div>
+						<div class=" defaultcursor backcategoryBtn">
+							<div class="rate<%= query.rating %>"></div>
 						</div>
 						<br />
 						<div class="eventDetails">
@@ -52,13 +51,65 @@
 								<%= query.cost %>
 							</div>
 						</div></br>
-						<div>
-							Rate It:&nbsp;&nbsp;&nbsp;
-							<% include partials/feedback.ejs %>
-						</div><br />
-						<div class="flex">Save It:&nbsp;
-							<div id="unlike" class="unlike" onclick="like(1)"></div>
-							<div id="like" class="like" onclick="like(0)"></div>
+						<div class="userFeedback">
+							<span class="fontB fontLarge">Your Feedback:</span><br />
+							<br />
+							<div class="flex centerAlign">
+								Rate It:&nbsp;&nbsp;&nbsp;
+								<% include partials/feedback.ejs %>
+							</div><br />
+							<div class="flex">Save It:&nbsp;
+								<% if(JSON.stringify(userItem) === JSON.stringify({})){ %>
+								<form id="saveItem" method="POST" action="/userProfileController?action=save">
+									<input type="hidden" value='<%=query.itemCode %>' name="itemCode">
+									<input type="hidden" value="<%= query.itemShortName %>" name="itemName">
+									<input type="hidden" value="<%= query.catalogCatagoryName %>" name="categoryName">
+									<input type="hidden" value=0 name="rating">
+									<input type="hidden" value=false name="visited">
+									<% if(JSON.stringify(userItemDetails) != JSON.stringify({})){ %>
+									<% for(var j=0; j<userItemDetails.itemList.length; j++) { %>
+									<input type="hidden" name="userItemList" value="<%= userItemDetails.itemList[j].itemCode %>">
+									<% } %>
+									<% } %>
+									<div id="unlike" class="unlike" onclick="document.getElementById('saveItem').submit();"></div>
+								</form>
+								<% }else{ %>
+								<div id="like" class="like" onclick="/myTrips"></div>
+								<% } %>
+							</div><br />
+							<div class="flex centerAlign">Visited:
+								<form id="visitedItem" method="POST" action="/userProfileController?action=updateVisit">
+									<input type="hidden" value='<%=query.itemCode %>' name="itemCode">
+									<input type="hidden" value="<%= query.itemShortName %>" name="itemName">
+									<input type="hidden" value="<%= query.catalogCatagoryName %>" name="categoryName">
+									<input type="hidden" value=0 name="rating">
+									<% if(JSON.stringify(userItem) != JSON.stringify({})){ %>
+									<% if(userItem.visitedFlag){ %>
+									<input class="marginLeft" type="radio" name="visitedFlag" value="true" checked="checked"> Yes
+									<input class="marginLeft" type="radio" name="visitedFlag" value="false"> No
+									<% }else{ %>
+									<input class="marginLeft" type="radio" name="visitedFlag" value="true"> Yes
+									<input class="marginLeft" type="radio" name="visitedFlag" value="false" checked="checked"> No
+									<% } %>
+									<% }else{ %>
+									<input class="marginLeft" type="radio" name="visitedFlag" value="true"> Yes
+									<input class="marginLeft" type="radio" name="visitedFlag" value="false"> No
+									<% } %>
+									<input type="hidden" value='<%=query.itemCode %>' name="itemCode">
+									<% if(JSON.stringify(userItemDetails) != JSON.stringify({})){ %>
+									<% for(var j=0; j<userItemDetails.itemList.length; j++) { %>
+									<input type="hidden" name="userItemList" value="<%= userItemDetails.itemList[j].itemCode %>">
+									<% } %>
+									<input class="button" type="submit" value="Submit">
+									<% }else{ %>
+									<div class="tooltip">
+										<input class="button" type="submit" value="Submit" disabled="disabled">
+										<span class="tooltiptext">Please Sign In</span>
+									</div>
+									<% } %>
+
+								</form>
+							</div>
 						</div>
 						<div>
 							<div class="images">

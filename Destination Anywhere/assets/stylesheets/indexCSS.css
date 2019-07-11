@@ -18,6 +18,8 @@ body {
 }
 
 .mainHeader {
+  height: 100%;
+  align-items: center;
   display: flex;
   background-color: white;
   width: 100%;
@@ -80,7 +82,7 @@ body {
 
 .headContainer {
   width: 100%;
-  height: 10%;
+  height: 100%;
 }
 
 a {
@@ -333,7 +335,6 @@ a:hover {
   background-repeat: no-repeat;
   background-position: 2px 2px;
   margin-left: 10px;
-  display: none;
 }
 
 .unlike {
@@ -365,4 +366,64 @@ a:hover {
 .height5 {
   min-height: 10%;
   border: #ff8200 solid;
+}
+
+.centerAlign {
+  align-items: center;
+}
+
+.fontLarge {
+  font-size: larger;
+}
+
+.userIconSize {
+  width: 30px;
+  height: 30px;
+}
+
+.user {
+  width: 80%;
+  margin: auto;
+}
+
+.userIcon {
+  width: 20%;
+}
+
+.userdetails {
+  width: 20%;
+  display: flex;
+  margin: 20px auto;
+}
+
+.margin10 {
+  margin-right: 10px;
+}
+
+td {
+  height: 47px;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 105%;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }

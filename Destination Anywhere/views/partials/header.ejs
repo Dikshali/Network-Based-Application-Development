@@ -7,7 +7,16 @@
         <h5 class="companyTag">You Choose, We Plan</h5>
       </div>
     </div>
-    <div id="userSignIn" class="userSignIn">Sign in</div>
-
+    <% if(JSON.stringify(sessionUser) != JSON.stringify({})){ %>
+    <div class="userdetails">
+      <div class="userIcon">
+        <img class="userIconSize" src="http://localhost:8080/assets/images/user.png" alt="userIcon" />
+      </div>
+      <div class="user">
+        <%= sessionUser.firstName %>&nbsp
+        <%= sessionUser.lastName %>
+      </div>
+    </div>
+    <% } %>
   </header>
 </div>

@@ -1,46 +1,37 @@
 @charset "ISO-8859-1";
 
-.user {
-	width: 80%;
-}
-
-.userIcon {
-	width: 20%;
-}
-
-.userIconSize {
-	width: 30px;
-	height: 30px;
-}
-
-.userdetails {
-	width: 20%;
-	display: flex;
-	margin: 20px auto;
-}
-
 .myTripContent {
-	padding: 20px;
-	width: 80%;
-	min-height: 540px;
-	background-color: white;
+  padding: 20px;
+  width: 80%;
+  min-height: 540px;
+  background-color: white;
 }
 
 .textAlignLeft {
-	text-align: left;
+  text-align: left;
 }
 
 .margin20 {
-	margin: 20px 0px;
+  margin: 20px 0px;
 }
 
 .textStyle {
-	font-weight: bold;
-	font-size: 20px;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 td, th {
-	border: 1px solid #dddddd;
-	text-align: left;
-	padding: 8px;
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.backcategoryBtn {
+  margin: auto;
+  width: 100%;
+}
+
+.checkedIcon {
+  width: 25px;
+  height: 25px;
 }

@@ -9,7 +9,7 @@
 
 <body>
 	<div class="height5">
-		<% include partials/userSpecific_header.ejs %>
+		<% include partials/header.ejs %>
 	</div>
 	<div class="container">
 		<div id="navDiv" class="navDiv">
@@ -18,7 +18,11 @@
 		<div class="content">
 			<% include partials/site-navigation.ejs %>
 			<div class="myTripContent">
-				<div class="margin20 textStyle">You have visited these places.
+				<%if (items.length<=0){ %>
+				<div class="margin20 textStyle">You have not saved any places.
+				</div>
+				<% }else{ %>
+				<div class="margin20 textStyle">You have saved these places.
 				</div>
 				<div>
 					<table style="width: 100%">
@@ -26,49 +30,51 @@
 							<th>Places</th>
 							<th>Category</th>
 							<th>My Rating</th>
+							<th>Visited</th>
 							<th></th>
 						</tr>
+						<% items.forEach(function(itm) { %>
 						<tr>
 							<td>
-								<%= query1.itemShortName %>
+								<%= itm.itemShortName %>
 							</td>
 							<td>
-								<%= query1.catalogCatagoryName %>
+								<%= itm.categoryName %>
 							</td>
 							<td>
-								<div class="rate<%= query1.rating %>"></div>
+								<div class="rate<%= itm.rating %>"></div>
 							</td>
-							<td><button class="update" type="button" onclick="location.href = 'http://localhost:8080/viewCatalog/item?itemCode=<%= query1.itemCode %>';">Update</button>
-								<button type="button" class="delete" onclick="location.href = '/myTrip';">Delete</button></td>
+							<td>
+								<%if (itm.visitedFlag){ %>
+								<img class="checkedIcon" src="/assets/images/checked.png">
+								<% } %>
+							</td>
+							<td class="mainTile">
+								<form id="updateItem" action="/viewCatalog/item?itemCode=<%= itm.itemCode %>" method="GET">
+									<input type="hidden" name="itemCode" value="<%=itm.itemCode %>">
+									<% if(JSON.stringify(userItemDetails) != JSON.stringify({})){ %>
+									<% for(var j=0; j<userItemDetails.itemList.length; j++) { %>
+									<input type="hidden" name="userItemList" value="<%= userItemDetails.itemList[j].itemCode %>">
+									<% } %>
+									<% } %>
+									<input type="submit" class="button margin10" value="Update" onclick="document.getElementById('updateItem').submit();">
+								</form>
+								<form id="deleteItem" action="/userProfileController?action=deleteItem" method="POST">
+									<input type="hidden" name="itemCode" value="<%=itm.itemCode %>">
+									<% if(JSON.stringify(userItemDetails) != JSON.stringify({})){ %>
+									<% for(var j=0; j<userItemDetails.itemList.length; j++) { %>
+									<input type="hidden" name="userItemList" value="<%= userItemDetails.itemList[j].itemCode %>">
+									<% } %>
+									<% } %>
+									<input type="submit" class="button" value="Delete" onclick="document.getElementById('deleteItem').submit();">
+								</form>
+							</td>
+
 						</tr>
-						<tr>
-							<td>
-								<%= query2.itemShortName %>
-							</td>
-							<td>
-								<%= query2.catalogCatagoryName %>
-							</td>
-							<td>
-								<div class="rate<%= query2.rating %>"></div>
-							</td>
-							<td><button class="update" type="button" onclick="location.href = 'http://localhost:8080/viewCatalog/item?itemCode=<%= query2.itemCode %>';">Update</button>
-								<button type="button" class="delete" onclick="location.href = '/myTrip';">Delete</button></td>
-						</tr>
-						<tr>
-							<td>
-								<%= query3.itemShortName %>
-							</td>
-							<td>
-								<%= query3.catalogCatagoryName %>
-							</td>
-							<td>
-								<div class="rate<%= query3.rating %>"></div>
-							</td>
-							<td><button class="update" type="button" onclick="location.href = 'http://localhost:8080/viewCatalog/item?itemCode=<%= query3.itemCode %>';">Update</button>
-								<button type="button" class="delete" onclick="location.href = '/myTrip';">Delete</button></td>
-						</tr>
+						<% }); %>
 					</table>
 				</div>
+				<% } %>
 			</div>
 		</div>
 	</div>
