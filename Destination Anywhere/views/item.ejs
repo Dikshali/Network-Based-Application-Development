@@ -24,7 +24,7 @@
 				</div>
 				<div class="flex">
 					<div id="countryId" class="CountryNamehead">
-						<%= query.catalogCatagoryName %>
+						<%= query[0].categoryName %>
 					</div>
 				</div>
 				<br />
@@ -32,23 +32,24 @@
 					<div class="itemInfo">
 						<div class="flex">
 							<div id="eventName" class="eventName">
-								<%= query.itemName %>
+								<%= query[0].itemName %>
 							</div>
 						</div>
 						<div class=" defaultcursor backcategoryBtn">
-							<div class="rate<%= query.rating %>"></div>
+							<div class="rate<%= query[0].rating %>"></div>
 						</div>
 						<br />
 						<div class="eventDetails">
-							<%= query.description %>
+							<%= query[0].description %>
 						</div></br>
 						<div class="flex fontB">
 							<div>Duration:
-								<%= query.duration %>&nbsp;days
+								<%= query[0].duration %>&nbsp;days
 							</div>
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<div>Cost:
-								<%= query.cost %>
+								$
+								<%= query[0].cost %>
 							</div>
 						</div></br>
 						<div class="userFeedback">
@@ -61,9 +62,9 @@
 							<div class="flex">Save It:&nbsp;
 								<% if(JSON.stringify(userItem) === JSON.stringify({})){ %>
 								<form id="saveItem" method="POST" action="/userProfileController?action=save">
-									<input type="hidden" value='<%=query.itemCode %>' name="itemCode">
-									<input type="hidden" value="<%= query.itemShortName %>" name="itemName">
-									<input type="hidden" value="<%= query.catalogCatagoryName %>" name="categoryName">
+									<input type="hidden" value='<%=query[0].itemCode %>' name="itemCode">
+									<input type="hidden" value="<%= query[0].itemShortName %>" name="itemName">
+									<input type="hidden" value="<%= query[0].categoryName %>" name="categoryName">
 									<input type="hidden" value=0 name="rating">
 									<input type="hidden" value=false name="visited">
 									<% if(JSON.stringify(userItemDetails) != JSON.stringify({})){ %>
@@ -79,9 +80,9 @@
 							</div><br />
 							<div class="flex centerAlign">Visited:
 								<form id="visitedItem" method="POST" action="/userProfileController?action=updateVisit">
-									<input type="hidden" value='<%=query.itemCode %>' name="itemCode">
-									<input type="hidden" value="<%= query.itemShortName %>" name="itemName">
-									<input type="hidden" value="<%= query.catalogCatagoryName %>" name="categoryName">
+									<input type="hidden" value='<%=query[0].itemCode %>' name="itemCode">
+									<input type="hidden" value="<%= query[0].itemShortName %>" name="itemName">
+									<input type="hidden" value="<%= query[0].categoryName %>" name="categoryName">
 									<input type="hidden" value=0 name="rating">
 									<% if(JSON.stringify(userItem) != JSON.stringify({})){ %>
 									<% if(userItem.visitedFlag){ %>
@@ -95,7 +96,7 @@
 									<input class="marginLeft" type="radio" name="visitedFlag" value="true"> Yes
 									<input class="marginLeft" type="radio" name="visitedFlag" value="false"> No
 									<% } %>
-									<input type="hidden" value='<%=query.itemCode %>' name="itemCode">
+									<input type="hidden" value='<%=query[0].itemCode %>' name="itemCode">
 									<% if(JSON.stringify(userItemDetails) != JSON.stringify({})){ %>
 									<% for(var j=0; j<userItemDetails.itemList.length; j++) { %>
 									<input type="hidden" name="userItemList" value="<%= userItemDetails.itemList[j].itemCode %>">
@@ -112,17 +113,24 @@
 							</div>
 						</div>
 						<div>
+							<% if(query[0].imageUrlList.length % 2 == 0 || query[0].imageUrlList.length > 1){ %>
+							<% for(var i=0;i<query[0].imageUrlList.length-1;i++) { %>
 							<div class="images">
 								<div class="divSize centerAlign">
-									<img class="imageSize" src="<%= query.imageUrlList[0] %>" alt="picture" />
+									<img class="imageSize" src="<%= query[0].imageUrlList[i] %>" alt="picture" />
 								</div>
 								<div class="divSize centerAlign">
-									<img class="imageSize" src="<%= query.imageUrlList[1] %>" alt="picture" />
+									<img class="imageSize" src="<%= query[0].imageUrlList[i+1] %>" alt="picture" />
 								</div>
 							</div>
-							<div class="centerAlign">
-								<img class="centerImage" src="<%= query.imageUrlList[2] %>" alt="picture" />
+							<% i++; } %>
+							<% } %>
+							<% if(query[0].imageUrlList.length % 2 != 0 || query[0].imageUrlList.length == 1){ %>
+							<div class=" centerAlign">
+								<img class="centerImage" src="<%= query[0].imageUrlList[query[0].imageUrlList.length-1] %>" alt="picture" />
 							</div>
+							<% } %>
+
 						</div>
 					</div>
 				</div>

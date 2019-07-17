@@ -26,10 +26,10 @@
 						<div class="fontRB mainH colorBlack">Popular Attraction in
 							<%= query[i].categoryName %>
 						</div>
-						<% for(var j=0; j<query[i].items.length; j++) { %>
+						<% for(var j=0; j<query[i].itemList.length; j++) { %>
 						<br />
-						<a class="fontRB colorBlack" href="/viewCatalog/item?itemCode=<%= query[i].items[j].itemCode %>">&#187;
-							<%= query[i].items[j].itemShortName %> </a>
+						<a class="fontRB colorBlack" href="/viewCatalog/item?itemCode=<%= query[i].itemList[j].itemCode %>">&#187;
+							<%= query[i].itemList[j].itemShortName %> </a>
 						<% } %>
 					</div>
 				</div>

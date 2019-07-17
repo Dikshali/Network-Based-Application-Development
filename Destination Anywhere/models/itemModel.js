@@ -1,18 +1,17 @@
-var imageUrl = require('./getImageUrl');
-
-var itemInfo = function(itemCode, itemName, itemShortName, catalogCatagoryName, description, rating) {
-  var itemModel = {
-    itemCode: itemCode,
-    itemName: itemName,
-    itemShortName: itemShortName,
-    catalogCatagoryName: catalogCatagoryName,
-    description: description.desc,
-    duration: description.duration,
-    cost: description.cost,
-    rating: rating,
-    imageUrlList: imageUrl.getImageURL(itemCode)
-  };
-  return itemModel;
+class ItemModel {
+  constructor(itemCode, itemName, itemShortName, categoryId, catalogCatagoryName, description, duration, cost, rating, totalPeopleRated, imageUrl) {
+    this.itemCode = itemCode;
+    this.itemName = itemName;
+    this.itemShortName = itemShortName;
+    this.categoryId = categoryId;
+    this.catalogCatagoryName = catalogCatagoryName;
+    this.description = description;
+    this.duration = duration;
+    this.cost = cost;
+    this.rating = rating;
+    this.imageUrlList = imageUrl;
+    this.totalPeopleRated = totalPeopleRated;
+  }
 }
 
-module.exports.itemInfo = itemInfo;
+module.exports = ItemModel;

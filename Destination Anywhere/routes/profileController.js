@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({
   extended: false
 });
+var userUtility = require('./../utility/userUtility.js');
 
 var userItemDetails = {};
 var sessionUser = {};
@@ -21,50 +22,26 @@ app.use(function sessionCheck(req, res, next) {
   next();
 });
 
-app.post('/', urlencodedParser, function(req, res) {
+app.post('/', urlencodedParser, async function(req, res) {
   if (JSON.stringify(sessionUser) != JSON.stringify({})) {
-    console.log("data " + JSON.stringify(req.body));
     if (userItemDetails.itemList.length <= 1) {
-      if (req.query.action == "deleteItem") {
-        for (var i = 0; i < userItemDetails.itemList.length; i++) {
-          if (userItemDetails.itemList[i].itemCode == parseInt(req.body.itemCode)) {
-            userItemDetails.itemList.splice(i, 1);;
-          }
-        }
-      } else if (req.query.action == "save") {
-        var userItem = require('./../models/userItem.js');
-        userItemDetails.itemList.push(new userItem(parseInt(req.body.itemCode), req.body.itemName, req.body.categoryName, parseInt(req.body.rating), (req.body.visited == "true")));
+      if (req.query.action == "save") {
+        await userUtility.addUserItem(req.session.theUser.userId, parseInt(req.body.itemCode), req.body.itemName, req.body.categoryName, parseInt(req.body.rating), (req.body.visitedFlag == "true"));
+        req.session.userProfile = await userUtility.getUserProfile(req.session.theUser.userId);
+        res.redirect('/myTrip');
       } else if (req.query.action == "updateRating") {
-        var updateFlag = false;
-        for (var k = 0; k < userItemDetails.itemList.length; k++) {
-          if (userItemDetails.itemList[k].itemCode == parseInt(req.body.itemCode)) {
-            userItemDetails.itemList[k].rating = parseInt(req.body.rating);
-            updateFlag = true;
-          }
-        }
-        if (!updateFlag) {
-          var userItem = require('./../models/userItem.js');
-          userItemDetails.itemList.push(new userItem(parseInt(req.body.itemCode), req.body.itemName, req.body.categoryName, parseInt(req.body.rating), (req.body.visited == "true")));
-        }
+        await userUtility.updateRating(req.session.theUser.userId, parseInt(req.body.itemCode), req.body.itemName, req.body.categoryName, parseInt(req.body.rating), (req.body.visitedFlag == "true"));
+        req.session.userProfile = await userUtility.getUserProfile(req.session.theUser.userId);
+        res.redirect('/myTrip');
       } else if (req.query.action == "updateVisit") {
-        var updateFlag = false;
-        for (var k = 0; k < userItemDetails.itemList.length; k++) {
-          if (userItemDetails.itemList[k].itemCode == parseInt(req.body.itemCode)) {
-            updateFlag = true;
-            if (req.body.visitedFlag == "true") {
-              userItemDetails.itemList[k].visitedFlag = true;
-            } else {
-              userItemDetails.itemList[k].visitedFlag = false;
-            }
-          }
-        }
-        if (!updateFlag) {
-          var userItem = require('./../models/userItem.js');
-          userItemDetails.itemList.push(new userItem(parseInt(req.body.itemCode), req.body.itemName, req.body.categoryName, parseInt(req.body.rating), (req.body.visitedFlag == "true")));
-        }
+        await userUtility.updateVisitFlag(req.session.theUser.userId, parseInt(req.body.itemCode), req.body.itemName, req.body.categoryName, parseInt(req.body.rating), (req.body.visitedFlag == "true"));
+        req.session.userProfile = await userUtility.getUserProfile(req.session.theUser.userId);
+        res.redirect('/myTrip');
+      } else if (req.query.action == "deleteItem") {
+        await userUtility.deletItem(req.session.theUser.userId, parseInt(req.body.itemCode));
+        req.session.userProfile = await userUtility.getUserProfile(req.session.theUser.userId);
+        res.redirect('/myTrip');
       }
-      req.session.userProfile = userItemDetails;
-      res.redirect('/myTrip');
     } else if (req.body.userItemList.length == userItemDetails.itemList.length) {
       var count = 0;
       for (var i = 0; i < req.body.userItemList.length; i++) {
@@ -74,63 +51,40 @@ app.post('/', urlencodedParser, function(req, res) {
           }
         }
       }
+      console.log("data 2 count " + count);
       if (count == userItemDetails.itemList.length) {
-        //success
         if (req.query.action == "save") {
-          var userItem = require('./../models/userItem.js');
-          userItemDetails.itemList.push(new userItem(parseInt(req.body.itemCode), req.body.itemName, req.body.categoryName, parseInt(req.body.rating), (req.body.visited == "true")));
+          await userUtility.addUserItem(req.session.theUser.userId, parseInt(req.body.itemCode), req.body.itemName, req.body.categoryName, parseInt(req.body.rating), (req.body.visitedFlag == "true"));
+          req.session.userProfile = await userUtility.getUserProfile(req.session.theUser.userId);
+          //console.log("data 1" + JSON.stringify(req.session.userProfile));
+          res.redirect('/myTrip');
         } else if (req.query.action == "updateRating") {
-          var updateFlag = false;
-          for (var k = 0; k < userItemDetails.itemList.length; k++) {
-            if (userItemDetails.itemList[k].itemCode == parseInt(req.body.itemCode)) {
-              userItemDetails.itemList[k].rating = parseInt(req.body.rating);
-              updateFlag = true;
-            }
-          }
-          if (!updateFlag) {
-            var userItem = require('./../models/userItem.js');
-            userItemDetails.itemList.push(new userItem(parseInt(req.body.itemCode), req.body.itemName, req.body.categoryName, parseInt(req.body.rating), (req.body.visited == "true")));
-          }
+          await userUtility.updateRating(req.session.theUser.userId, parseInt(req.body.itemCode), req.body.itemName, req.body.categoryName, parseInt(req.body.rating), (req.body.visitedFlag == "true"));
+          req.session.userProfile = await userUtility.getUserProfile(req.session.theUser.userId);
+          res.redirect('/myTrip');
         } else if (req.query.action == "updateVisit") {
-          var updateFlag = false;
-          for (var k = 0; k < userItemDetails.itemList.length; k++) {
-            if (userItemDetails.itemList[k].itemCode == parseInt(req.body.itemCode)) {
-              updateFlag = true;
-              if (req.body.visitedFlag == "true") {
-                userItemDetails.itemList[k].visitedFlag = true;
-              } else {
-                userItemDetails.itemList[k].visitedFlag = false;
-              }
-            }
-          }
-          if (!updateFlag) {
-            var userItem = require('./../models/userItem.js');
-            userItemDetails.itemList.push(new userItem(parseInt(req.body.itemCode), req.body.itemName, req.body.categoryName, parseInt(req.body.rating), (req.body.visitedFlag == "true")));
-          }
+          await userUtility.updateVisitFlag(req.session.theUser.userId, parseInt(req.body.itemCode), req.body.itemName, req.body.categoryName, parseInt(req.body.rating), (req.body.visitedFlag == "true"));
+          req.session.userProfile = await userUtility.getUserProfile(req.session.theUser.userId);
+          res.redirect('/myTrip');
         } else if (req.query.action == "deleteItem") {
-          for (var i = 0; i < userItemDetails.itemList.length; i++) {
-            if (userItemDetails.itemList[i].itemCode == parseInt(req.body.itemCode)) {
-              userItemDetails.itemList.splice(i, 1);
-            }
-          }
+          await userUtility.deletItem(req.session.theUser.userId, parseInt(req.body.itemCode));
+          req.session.userProfile = await userUtility.getUserProfile(req.session.theUser.userId);
+          res.redirect('/myTrip');
         }
-        req.session.userProfile = userItemDetails;
-        res.redirect('/myTrip');
+
       } else {
         console.log("Not a Authorized Request");
         res.redirect('/viewCatalog/item?itemCode=' + parseInt(req.body.itemCode));
-        //not a proper request
       }
     } else {
       console.log("Not a Authorized Request");
       res.redirect('/viewCatalog/item?itemCode=' + parseInt(req.body.itemCode));
-      //not a proper request
-
     }
   } else {
     console.log("Please Sign in!!");
     res.redirect('/viewCatalog/item?itemCode=' + parseInt(req.body.itemCode));
   }
+
 });
 
 

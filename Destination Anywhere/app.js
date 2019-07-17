@@ -1,6 +1,10 @@
 var express = require('express');
 var app = express();
 var session = require('express-session');
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/DestinationAnywhereDB', {
+  useNewUrlParser: true
+});
 
 app.use(session({
   secret: 'application',
@@ -10,11 +14,15 @@ app.use(session({
     maxAge: 1000 * 30 * 60
   }
 }));
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
 
 app.set('view engine', 'ejs');
 app.use('/assets', express.static('assets'));
+
 var getItemDetails = require('./utility/getItemDetails');
-var userProfileDB = require('./utility/userProfileDB.js');
+var userUtility = require('./utility/userUtility.js');
+
 var catalogRoute = require('./routes/catalog.js');
 var profileController = require('./routes/profileController.js');
 
@@ -41,6 +49,11 @@ app.get('/signOut', function(req, res) {
   });
 });
 
+
+db.on('connected', function() {
+  console.log("DB connection is open");
+});
+
 app.use('/viewCatalog', catalogRoute);
 app.use('/userProfileController', profileController);
 
@@ -63,15 +76,16 @@ app.get('/contactUs', function(req, res) {
   });
 });
 
-app.get('/myTrip', function(req, res) {
+app.get('/myTrip', async function(req, res) {
   if (!req.session.theUser) {
-    var userDB = require('./utility/userDB.js');
-    user = userDB.getUser(1);
+    user = await userUtility.getUser(1);
     req.session.theUser = user;
-    req.session.userProfile = userProfileDB.getUserProfile(req.session.theUser.userId);
+    req.session.userProfile = await userUtility.getUserProfile(req.session.theUser.userId);
   }
+  req.session.userProfile = await userUtility.getUserProfile(req.session.theUser.userId);
   userItemDetails = req.session.userProfile;
   sessionUser = req.session.theUser;
+  console.log("data " + JSON.stringify(userItemDetails));
   res.render('myTrips', {
     sessionUser: sessionUser,
     userItemDetails: userItemDetails,

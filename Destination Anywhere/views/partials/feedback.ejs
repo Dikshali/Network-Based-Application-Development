@@ -28,10 +28,10 @@
         <option value=5>5 Star</option>
         <% } %>
       </select>
-      <input type="hidden" value='<%=query.itemCode %>' name="itemCode">
-      <input type="hidden" value="<%= query.itemShortName %>" name="itemName">
-      <input type="hidden" value="<%= query.catalogCatagoryName %>" name="categoryName">
-      <input type="hidden" value=false name="visited">
+      <input type="hidden" value='<%=query[0].itemCode %>' name="itemCode">
+      <input type="hidden" value="<%= query[0].itemShortName %>" name="itemName">
+      <input type="hidden" value="<%= query[0].categoryName %>" name="categoryName">
+      <input type="hidden" value=false name="visitedFlag">
       <% if(JSON.stringify(userItemDetails) != JSON.stringify({})){ %>
       <% for(var j=0; j<userItemDetails.itemList.length; j++) { %>
       <input type="hidden" name="userItemList" value="<%= userItemDetails.itemList[j].itemCode %>">
