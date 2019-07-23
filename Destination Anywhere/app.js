@@ -2,6 +2,14 @@ var express = require('express');
 var app = express();
 var session = require('express-session');
 var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
+var urlencodedParser = bodyParser.urlencoded({
+  extended: false
+});
+var expressValidator = require('express-validator');
+app.use(expressValidator());
+const expressSanitizer = require('express-sanitizer');
+
 mongoose.connect('mongodb://localhost/DestinationAnywhereDB', {
   useNewUrlParser: true
 });
@@ -49,6 +57,31 @@ app.get('/signOut', function(req, res) {
   });
 });
 
+app.get('/signIn', function(req, res) {
+  res.render('login', {
+    sessionUser: {},
+    userItemDetails: {},
+    errorMsg: {}
+  });
+});
+
+app.get('/myTrip', async function(req, res) {
+  if (!req.session.theUser) {
+    res.redirect('/signIn');
+  } else {
+    userItemDetails = await userUtility.getUserProfile(req.session.theUser.userId);
+    //console.log("sanitize " + req.sanitize("<script> hello </script> world"));
+    //userItemDetails = req.sanitize(userItemDetails);
+
+    req.session.userProfile = userItemDetails;
+    sessionUser = req.session.theUser;
+    res.render('myTrips', {
+      sessionUser: sessionUser,
+      userItemDetails: userItemDetails,
+      items: userItemDetails.itemList
+    });
+  }
+});
 
 db.on('connected', function() {
   console.log("DB connection is open");
@@ -76,25 +109,52 @@ app.get('/contactUs', function(req, res) {
   });
 });
 
-app.get('/myTrip', async function(req, res) {
-  if (!req.session.theUser) {
-    user = await userUtility.getUser(1);
-    req.session.theUser = user;
-    req.session.userProfile = await userUtility.getUserProfile(req.session.theUser.userId);
+app.post('/authUser', urlencodedParser, async function(req, res) {
+  req.check('username').not().isEmpty().trim().isLength({
+    min: 3
+  }).withMessage('Username must be at least 3 chars long');
+  req.checkBody('password').not().isEmpty().trim()
+    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#%&])[0-9a-zA-Z!@#%&]{6,}$/).withMessage('Password must contain a number, a special character (allowed special characters are @!#%&),a lower case and uppercase letter. Password must be at least 6 chars long.')
+  var errors = req.validationErrors();
+  //console.log("Error " + req.body.password + " " + JSON.stringify(errors));
+  if (errors) {
+    res.render('login', {
+      sessionUser: {},
+      userItemDetails: {},
+      errorMsg: errors
+    });
+  } else {
+    var user = await userUtility.getUser(req.body.username, req.body.password);
+    //console.log("user " + user);
+    if (user) {
+      var userItemDetails = await userUtility.getUserProfile(user.userId);
+      req.session.theUser = user;
+      req.session.userProfile = userItemDetails;
+      res.redirect('/myTrip');
+      // res.render('myTrips', {
+      //   sessionUser: user,
+      //   userItemDetails: userItemDetails,
+      //   items: userItemDetails.itemList
+      // });
+    } else {
+      var errors = [{
+        msg: "Username or Password does not match."
+      }];
+      res.render('login', {
+        sessionUser: {},
+        userItemDetails: {},
+        errorMsg: errors
+      });
+    }
+
+
   }
-  req.session.userProfile = await userUtility.getUserProfile(req.session.theUser.userId);
-  userItemDetails = req.session.userProfile;
-  sessionUser = req.session.theUser;
-  console.log("data " + JSON.stringify(userItemDetails));
-  res.render('myTrips', {
-    sessionUser: sessionUser,
-    userItemDetails: userItemDetails,
-    items: userItemDetails.itemList
-  });
 });
 
 app.get('/*', function(req, res) {
-  res.render('404');
+  res.render('404', {
+    errors: {}
+  });
 });
 
 app.listen(8080, function() {});
