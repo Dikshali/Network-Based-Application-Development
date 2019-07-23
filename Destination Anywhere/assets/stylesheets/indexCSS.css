@@ -105,6 +105,17 @@ a:hover {
   color: white;
 }
 
+.menu {
+  width: 85px;
+  color: white;
+  background: none;
+  border: none;
+  font-size: large;
+  cursor: pointer;
+  height: 28px;
+  font-family: "Times New Roman", Times, serif;
+}
+
 .menu:hover {
   color: black;
 }
@@ -426,4 +437,12 @@ td {
 
 .tooltip:hover .tooltiptext {
   visibility: visible;
+}
+
+.inlineflex {
+  display: inline-flex;
+}
+
+.errorMsg {
+  color: Red;
 }

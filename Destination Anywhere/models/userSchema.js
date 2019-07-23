@@ -40,6 +40,14 @@ var UserSchema = new mongoose.Schema({
     country: {
       type: String,
       trim: true
+    },
+    user_name: {
+      type: String,
+      trim: true
+    },
+    password: {
+      type: String,
+      trim: true
     }
   }
 });
