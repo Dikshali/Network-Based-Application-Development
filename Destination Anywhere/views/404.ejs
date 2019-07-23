@@ -16,6 +16,13 @@
   <div class="backcategoryBtn" onclick="location.href='http://localhost:8080';">
     Go to Home Page
   </div>
+
+  <% if(errors){ %>
+  <br /><br />
+  <div class="errorMsg">
+    <%= errors.msg %>
+  </div>
+  <% } %>
 </body>
 
 </html>

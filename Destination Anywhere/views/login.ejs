@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Destination Anywhere</title>
+  <link rel="stylesheet" type="text/css" href="/assets/stylesheets/indexCSS.css" />
+  <link rel="stylesheet" type="text/css" href="/assets/stylesheets/signinStyle.css" />
+</head>
+
+<body>
+  <div class="height5">
+    <% include partials/header.ejs %>
+  </div>
+
+  <div class="container">
+    <div id="navDiv" class="navDiv">
+      <% include partials/user-navigation.ejs %>
+    </div>
+    <div class="content">
+      <% include partials/site-navigation.ejs %>
+      <div class="loginContent">
+        <h1>Welcome to Destination Anywhere</h1>
+        <p class="marginTop15">Please enter username and password to Sign in.</p>
+        <% if(errorMsg.length > 0){ %>
+        <div class="errorMsg">
+          <%= errorMsg[0].msg %>
+        </div>
+        <% } %>
+        <form action="/authUser" method="POST">
+          <div class="flex marginTop15 userInput">
+            <div class="width10">
+              Username:
+            </div>
+            <div>
+              <input class="textStyle" type="text" name="username" required />
+            </div>
+          </div>
+          <div class="flex marginTop15 userInput">
+            <div class="width10">
+              Password:
+            </div>
+            <div>
+              <input class="textStyle" type="password" name="password" required />
+            </div>
+          </div>
+          <input type="submit" class="wh5" value="Login">
+        </form>
+      </div>
+    </div>
+  </div>
+  <% include partials/footer.ejs %>
+</body>
+
+</html>

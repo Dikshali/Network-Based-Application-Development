@@ -1,6 +1,6 @@
 <nav id="navBar" class="navBar">
   <% if(JSON.stringify(sessionUser) === JSON.stringify({})){ %>
-  <a class="menu" href="/myTrip">Sign-in</a>
+  <a class="menu" href="/signIn">Sign-in</a>
   <% }else{ %>
   <a class="menu" href="/signOut">Sign-out</a>
   <% } %> | <a class="menu" href="/myTrip">My Trips</a> | <a class="menu defaultcursor" href="">Cart</a>

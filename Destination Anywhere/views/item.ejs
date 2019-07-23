@@ -66,16 +66,16 @@
 									<input type="hidden" value="<%= query[0].itemShortName %>" name="itemName">
 									<input type="hidden" value="<%= query[0].categoryName %>" name="categoryName">
 									<input type="hidden" value=0 name="rating">
-									<input type="hidden" value=false name="visited">
+									<input type="hidden" value=false name="visitedFlag">
 									<% if(JSON.stringify(userItemDetails) != JSON.stringify({})){ %>
 									<% for(var j=0; j<userItemDetails.itemList.length; j++) { %>
 									<input type="hidden" name="userItemList" value="<%= userItemDetails.itemList[j].itemCode %>">
 									<% } %>
 									<% } %>
-									<div id="unlike" class="unlike" onclick="document.getElementById('saveItem').submit();"></div>
+									<div id="unlike" class="unlike pointer" onclick="document.getElementById('saveItem').submit();"></div>
 								</form>
 								<% }else{ %>
-								<div id="like" class="like" onclick="/myTrips"></div>
+								<div id="like" class="like pointer" onclick="/myTrips"></div>
 								<% } %>
 							</div><br />
 							<div class="flex centerAlign">Visited:
