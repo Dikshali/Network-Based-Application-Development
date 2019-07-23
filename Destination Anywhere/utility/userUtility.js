@@ -4,13 +4,43 @@ var UserProfile = require('../models/userProfile.js');
 var User = require('../models/userModel.js');
 var UserItem = require('../models/userItem.js');
 
-var getUser = function(userId) {
+// var getUserDetails = function(userId) {
+//   return new Promise((resolve, reject) => {
+//     UserSchema.find({
+//       user_id: userId
+//     }).then(data => {
+//       var user = new User(data[0].user_id, data[0].first_name, data[0].last_name, data[0].age, data[0].email, data[0].address);
+//       resolve(user);
+//     }).catch(err => {
+//       return reject(err);
+//     })
+//   });
+// }
+
+var getUser = function(username, password) {
   return new Promise((resolve, reject) => {
-    UserSchema.find({
-      user_id: userId
+    UserSchema.findOne({
+      $and: [{
+        user_name: username
+      }, {
+        password: password
+      }]
+    }, {
+      user_id: 1,
+      first_name: 1,
+      last_name: 1,
+      age: 1,
+      email: 1,
+      address: 1,
+      user_name: 1
     }).then(data => {
-      var user = new User(data[0].user_id, data[0].first_name, data[0].last_name, data[0].age, data[0].email, data[0].address);
-      resolve(user);
+      if (data) {
+        var user = new User(data.user_id, data.first_name, data.last_name, data.age, data.email, data.address, data.user_name);
+        resolve(user);
+      } else {
+        resolve(data);
+      }
+
     }).catch(err => {
       return reject(err);
     })
