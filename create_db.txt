@@ -1,4 +1,4 @@
-
+﻿
 use DestinationAnywhereDB;
 
 db.createCollection("users");
@@ -6,9 +6,8 @@ db.createCollection("items");
 db.createCollection("categorys");
 db.createCollection("useritemprofiles");
 
-db.users.insert({user_id:1, first_name:"Dikshali", last_name:"Margaj", age:25, email:"dmargaj@uncc.edu", address:{street: "11012 Graduate Ln", city: "Charlotte", state: "North Carolina", zip: 28262, country: "United States"}});
-
-db.users.insert({user_id:2, first_name:"Joe", last_name:"Smith", age:30, email:"jsmith@gmail.com", address:{street: "47 W 13th St", city: "New York", state: "NY", zip: 10011, country: "United States"}});
+db.users.insertMany([{ "_id" : ObjectId("5ca7f52983e18a927eddf034"), "user_id" : 1, "first_name" : "Dikshali", "last_name" : "Margaj", "age" : 25, "email" : "dmargaj@uncc.edu", "address" : { "street" : "11012 Graduate Ln", "city" : "Charlotte", "state" : "North Carolina", "zip" : 28262, "country" : "United States" }, user_name:"Dikshali", password:"Test@123"},
+{ "_id" : ObjectId("5ca80d5683e18a927eddf047"), "user_id" : 2, "first_name" : "Joe", "last_name" : "Smith", "age" : 30, "email" : "jsmith@gmail.com", "address" : { "street" : "47 W 13th St", "city" : "New York", "state" : "NY", "zip" : 10011, "country" : "United States" }, user_name:"Joe123", password:"Test@123"}])
 
 db.categorys.insertMany([
 {categoryCode:101, categoryName: "Germany",itemList:[{itemCode: 1001, itemShortName:"Sachsenhausen Memorial Tour"},{itemCode:1002, itemShortName:"Hitler\'s Germany"},{itemCode:1003 , itemShortName:"East Berlin"}]},
