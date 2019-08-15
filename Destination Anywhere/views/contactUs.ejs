@@ -1,67 +1,48 @@
-<!DOCTYPE html>
-<html>
-
 <head>
 	<title>Destination Anywhere</title>
 	<link rel="stylesheet" type="text/css" href="assets/stylesheets/indexCSS.css" />
 	<link rel="stylesheet" type="text/css" href="assets/stylesheets/contactUsStyle.css" />
 </head>
 
-<body>
-	<div class="height5">
-		<% include partials/header.ejs %>
-	</div>
-	<div class="container">
-		<div id="navDiv" class="navDiv">
-			<% include partials/user-navigation.ejs %>
+<div class="contactUsContent">
+	<div class="contactUsTitle">Contact Us</div>
+	<br />
+	<div class="">
+		<div class="fontContact">
+			You can reach us at
 		</div>
-		<div class="content">
-			<% include partials/site-navigation.ejs %>
-			<div class="contactUsContent">
-				<div class="contactUsTitle">Contact Us</div>
-				<br />
-				<div class="">
-					<div class="fontContact">
-						You can reach us at
-					</div>
-					<div class="margin10"><span class="bold">
-							Office Address:</span></br>
-						123 Beverly Hills,<br />Charlotte, NC 28262
-					</div>
-					<div class="margin10">
-						<img class="sizeImg" src="http://localhost:8080/assets/images/phone.png" alt="phone" />&nbsp;&nbsp;&nbsp;&nbsp; +1 789 456 1235
-					</div>
-					<div class="margin10">
-						<img class="sizeImg" src="http://localhost:8080/assets/images/email.png" alt="phone" />&nbsp;&nbsp;&nbsp;&nbsp; contact@destanywhere.com
-					</div>
-
-				</div>
-				<br />
-				<div>We are here to answer any question you may have. Reach out
-					to us and we will respond as soon as we can.</div>
-				<form class="formContact" method="POST" action="/submitQuery">
-					<div>
-						Name: <span class="colorRed">*</span><br /> <input class="marging10 textSize" type="text" required>
-					</div>
-					<div>
-						Email: <span class="colorRed">*</span><br /> <input class="marging10 textSize" type="email" required>
-					</div>
-					<div>
-						Message: <span class="colorRed">*</span><br />
-						<textarea class="marging10" name="message" rows="10" required></textarea>
-					</div>
-					<div>
-						<input class="button" type="submit" value="Submit">
-					</div>
-				</form>
-				<div class="result">Your query is noted!!. We will get in touch
-					with you soon.</div>
-
-
-			</div>
+		<div class="margin10"><span class="bold">
+				Office Address:</span></br>
+			123 Beverly Hills,<br />Charlotte, NC 28262
 		</div>
-	</div>
-	<% include partials/footer.ejs %>
-</body>
+		<div class="margin10">
+			<img class="sizeImg" src="http://localhost:8080/assets/images/phone.png" alt="phone" />&nbsp;&nbsp;&nbsp;&nbsp; +1 789 456 1235
+		</div>
+		<div class="margin10">
+			<img class="sizeImg" src="http://localhost:8080/assets/images/email.png" alt="phone" />&nbsp;&nbsp;&nbsp;&nbsp; contact@destanywhere.com
+		</div>
 
-</html>
+	</div>
+	<br />
+	<div>We are here to answer any question you may have. Reach out
+		to us and we will respond as soon as we can.</div>
+	<form class="formContact" method="POST" action="/submitQuery">
+		<div>
+			Name: <span class="colorRed">*</span><br /> <input class="marging10 textSize" type="text" required>
+		</div>
+		<div>
+			Email: <span class="colorRed">*</span><br /> <input class="marging10 textSize" type="email" required>
+		</div>
+		<div>
+			Message: <span class="colorRed">*</span><br />
+			<textarea class="marging10" name="message" rows="10" required></textarea>
+		</div>
+		<div>
+			<input class="button" type="submit" value="Submit">
+		</div>
+	</form>
+	<div class="result">Your query is noted!!. We will get in touch
+		with you soon.</div>
+
+
+</div>

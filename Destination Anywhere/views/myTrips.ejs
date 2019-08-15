@@ -1,88 +1,68 @@
-<!DOCTYPE html>
-<html>
-
 <head>
 	<title>Destination Anywhere</title>
 	<link rel="stylesheet" type="text/css" href="/assets/stylesheets/indexCSS.css" />
 	<link rel="stylesheet" type="text/css" href="/assets/stylesheets/myTripsStyle.css" />
 </head>
-
-<body>
-	<div class="height5">
-		<% include partials/header.ejs %>
+<div class="myTripContent">
+	<%if (items.length<=0){ %>
+	<div class="margin20 textStyle">You have not saved any places.
 	</div>
-	<div class="container">
-		<div id="navDiv" class="navDiv">
-			<% include partials/user-navigation.ejs %>
-		</div>
-		<div class="content">
-			<% include partials/site-navigation.ejs %>
-			<div class="myTripContent">
-				<%if (items.length<=0){ %>
-				<div class="margin20 textStyle">You have not saved any places.
-				</div>
-				<% }else{ %>
-				<div class="margin20 textStyle">You have saved these places.
-				</div>
-				<div>
-					<table style="width: 100%">
-						<tr class="textAlignLeft">
-							<th>Places</th>
-							<th>Category</th>
-							<th>My Rating</th>
-							<th>Visited</th>
-							<th></th>
-						</tr>
-						<% items.forEach(function(itm) { %>
-						<tr>
-							<td>
-								<%= itm.itemShortName %>
-							</td>
-							<td>
-								<%= itm.categoryName %>
-							</td>
-							<td>
-								<div class="rate<%= itm.rating %>"></div>
-							</td>
-							<td>
-								<%if (itm.visitedFlag){ %>
-								<img class="checkedIcon" src="/assets/images/checked.png">
-								<% } %>
-							</td>
-							<td class="mainTile">
-								<form id="updateItem" action="/viewCatalog/item?itemCode=<%= itm.itemCode %>" method="GET">
-									<input type="hidden" name="itemCode" value="<%=itm.itemCode %>">
-									<% if(JSON.stringify(userItemDetails) != JSON.stringify({})){ %>
-									<% for(var j=0; j<userItemDetails.itemList.length; j++) { %>
-									<input type="hidden" name="userItemList" value="<%= userItemDetails.itemList[j].itemCode %>">
-									<% } %>
-									<% } %>
-									<input type="submit" class="button margin10" value="Update" onclick="document.getElementById('updateItem').submit();">
-								</form>
-								<form id="deleteItem" action="/userProfileController?action=deleteItem" method="POST">
-									<input type="hidden" name="itemCode" value="<%=itm.itemCode %>">
-									<input type="hidden" name="itemName" value="<%=itm.itemShortName %>">
-									<input type="hidden" name="visitedFlag" value="<%=itm.visitedFlag %>">
-									<input type="hidden" name="categoryName" value="<%=itm.categoryName %>">
-									<input type="hidden" name="rating" value="<%=itm.rating %>">
-									<% if(JSON.stringify(userItemDetails) != JSON.stringify({})){ %>
-									<% for(var j=0; j<userItemDetails.itemList.length; j++) { %>
-									<input type="hidden" name="userItemList" value="<%= userItemDetails.itemList[j].itemCode %>">
-									<% } %>
-									<% } %>
-									<input type="submit" class="button" value="Delete" onclick="document.getElementById('deleteItem').submit();">
-								</form>
-							</td>
-
-						</tr>
-						<% }); %>
-					</table>
-				</div>
-				<% } %>
-			</div>
-		</div>
+	<% }else{ %>
+	<div class="margin20 textStyle">You have saved these places.
 	</div>
-	<% include partials/footer.ejs %>
-</body>
+	<div>
+		<table style="width: 100%">
+			<tr class="textAlignLeft">
+				<th>Places</th>
+				<th>Category</th>
+				<th>My Rating</th>
+				<th>Visited</th>
+				<th></th>
+			</tr>
+			<% items.forEach(function(itm) { %>
+			<tr>
+				<td>
+					<%= itm.itemShortName %>
+				</td>
+				<td>
+					<%= itm.categoryName %>
+				</td>
+				<td>
+					<div class="rate<%= itm.rating %>"></div>
+				</td>
+				<td>
+					<%if (itm.visitedFlag){ %>
+					<img class="checkedIcon" src="/assets/images/checked.png">
+					<% } %>
+				</td>
+				<td class="mainTile">
+					<form id="updateItem" action="/viewCatalog/item?itemCode=<%= itm.itemCode %>" method="GET">
+						<input type="hidden" name="itemCode" value="<%=itm.itemCode %>">
+						<% if(JSON.stringify(userItemDetails) != JSON.stringify({})){ %>
+						<% for(var j=0; j<userItemDetails.itemList.length; j++) { %>
+						<input type="hidden" name="userItemList" value="<%= userItemDetails.itemList[j].itemCode %>">
+						<% } %>
+						<% } %>
+						<input type="submit" class="button margin10" value="Update" onclick="document.getElementById('updateItem').submit();">
+					</form>
+					<form id="deleteItem" action="/userProfileController?action=deleteItem" method="POST">
+						<input type="hidden" name="itemCode" value="<%=itm.itemCode %>">
+						<input type="hidden" name="itemName" value="<%=itm.itemShortName %>">
+						<input type="hidden" name="visitedFlag" value="<%=itm.visitedFlag %>">
+						<input type="hidden" name="categoryName" value="<%=itm.categoryName %>">
+						<input type="hidden" name="rating" value="<%=itm.rating %>">
+						<% if(JSON.stringify(userItemDetails) != JSON.stringify({})){ %>
+						<% for(var j=0; j<userItemDetails.itemList.length; j++) { %>
+						<input type="hidden" name="userItemList" value="<%= userItemDetails.itemList[j].itemCode %>">
+						<% } %>
+						<% } %>
+						<input type="submit" class="button" value="Delete" onclick="document.getElementById('deleteItem').submit();">
+					</form>
+				</td>
 
-</html>
+			</tr>
+			<% }); %>
+		</table>
+	</div>
+	<% } %>
+</div>

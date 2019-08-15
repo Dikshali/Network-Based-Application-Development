@@ -1,43 +1,23 @@
-<!DOCTYPE html>
-<html>
-
 <head>
 	<title>Destination Anywhere</title>
 	<link rel="stylesheet" type="text/css" href="/assets/stylesheets/indexCSS.css" />
 	<link rel="stylesheet" type="text/css" href="/assets/stylesheets/categoryStyle.css" />
 	<link href="http://fonts.googleapis.com/css?family=Reenie+Beanie:regular" rel="stylesheet" type="text/css">
 </head>
-
-<body>
-	<div class="height5">
-		<% include partials/header.ejs %>
-	</div>
-	<div class="container">
-		<div id="navDiv" class="navDiv">
-			<% include partials/user-navigation.ejs %>
-		</div>
-		<div class="content">
-			<% include partials/site-navigation.ejs %>
-			<div id="categories">
-				<% for(var i=0; i<query.length; i++) { %>
-				<div class="displayFlex margin50">
-					<img class="countryWH" id='germanyLogo' src="http://localhost:8080/assets/images/<%= query[i].categoryName %>.jpg" alt="<%= query[i].categoryName %>Logo" />
-					<div class="todoGermany stickynotes">
-						<div class="fontRB mainH colorBlack">Popular Attraction in
-							<%= query[i].categoryName %>
-						</div>
-						<% for(var j=0; j<query[i].itemList.length; j++) { %>
-						<br />
-						<a class="fontRB colorBlack" href="/viewCatalog/item?itemCode=<%= query[i].itemList[j].itemCode %>">&#187;
-							<%= query[i].itemList[j].itemShortName %> </a>
-						<% } %>
-					</div>
-				</div>
-				<% } %>
+<div id="categories">
+	<% for(var i=0; i<query.length; i++) { %>
+	<div class="displayFlex margin50">
+		<img class="countryWH" id='germanyLogo' src="http://localhost:8080/assets/images/<%= query[i].categoryName %>.jpg" alt="<%= query[i].categoryName %>Logo" />
+		<div class="todoGermany stickynotes">
+			<div class="fontRB mainH colorBlack">Popular Attraction in
+				<%= query[i].categoryName %>
 			</div>
+			<% for(var j=0; j<query[i].itemList.length; j++) { %>
+			<br />
+			<a class="fontRB colorBlack" href="/viewCatalog/item?itemCode=<%= query[i].itemList[j].itemCode %>">&#187;
+				<%= query[i].itemList[j].itemShortName %> </a>
+			<% } %>
 		</div>
 	</div>
-	<% include partials/footer.ejs %>
-</body>
-
-</html>
+	<% } %>
+</div>

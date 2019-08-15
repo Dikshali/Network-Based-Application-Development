@@ -38,7 +38,8 @@ app.use(function sessionCheck(req, res, next) {
 
 app.get('/', async function(req, res) {
   var categoryList = await getItemDetails.getCatalog();
-  res.render('categories', {
+  res.render('index', {
+    pageName: "categories",
     query: categoryList,
     sessionUser: sessionUser
   });
@@ -71,7 +72,8 @@ app.get('/item', [
           errors: {}
         });
       } else {
-        res.render('item', {
+        res.render('index', {
+          pageName: "item",
           query: item,
           sessionUser: sessionUser,
           userItem: userItem,

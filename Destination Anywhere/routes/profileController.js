@@ -104,7 +104,8 @@ app.post('/', urlencodedParser, [
         res.redirect('/viewCatalog/item?itemCode=' + parseInt(req.body.itemCode));
       }
     } else {
-      res.render('login', {
+      res.render('index', {
+        pageName: "login",
         sessionUser: sessionUser,
         userItemDetails: userItemDetails,
         errorMsg: {}

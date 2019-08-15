@@ -58,7 +58,8 @@ app.get('/signOut', function(req, res) {
 });
 
 app.get('/signIn', function(req, res) {
-  res.render('login', {
+  res.render('index', {
+    pageName: "login",
     sessionUser: {},
     userItemDetails: {},
     errorMsg: {}
@@ -75,7 +76,8 @@ app.get('/myTrip', async function(req, res) {
 
     req.session.userProfile = userItemDetails;
     sessionUser = req.session.theUser;
-    res.render('myTrips', {
+    res.render('index', {
+      pageName: "myTrips",
       sessionUser: sessionUser,
       userItemDetails: userItemDetails,
       items: userItemDetails.itemList
@@ -92,19 +94,22 @@ app.use('/userProfileController', profileController);
 
 app.get('/', function(req, res) {
   res.render('index', {
+    pageName: "home",
     sessionUser: sessionUser
   });
 });
 
 
 app.get('/aboutUS', function(req, res) {
-  res.render('aboutUs', {
+  res.render('index', {
+    pageName: "aboutUs",
     sessionUser: sessionUser
   });
 });
 
 app.get('/contactUs', function(req, res) {
-  res.render('contactUs', {
+  res.render('index', {
+    pageName: "contactUs",
     sessionUser: sessionUser
   });
 });
@@ -118,7 +123,8 @@ app.post('/authUser', urlencodedParser, async function(req, res) {
   var errors = req.validationErrors();
   //console.log("Error " + req.body.password + " " + JSON.stringify(errors));
   if (errors) {
-    res.render('login', {
+    res.render('index', {
+      pageName: "login",
       sessionUser: {},
       userItemDetails: {},
       errorMsg: errors
@@ -131,16 +137,12 @@ app.post('/authUser', urlencodedParser, async function(req, res) {
       req.session.theUser = user;
       req.session.userProfile = userItemDetails;
       res.redirect('/myTrip');
-      // res.render('myTrips', {
-      //   sessionUser: user,
-      //   userItemDetails: userItemDetails,
-      //   items: userItemDetails.itemList
-      // });
     } else {
       var errors = [{
         msg: "Username or Password does not match."
       }];
-      res.render('login', {
+      res.render('index', {
+        pageName: "login",
         sessionUser: {},
         userItemDetails: {},
         errorMsg: errors
