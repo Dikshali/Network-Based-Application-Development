@@ -1,12 +1,27 @@
 # Nbad(Network based application Development)
 
-DestinationAnywhere is a web application based on travel destination and related itineraries.
+DestinationAnywhere is a web application based on travel destination and related itineraries. This project demonstrates the protocols that support computer communication networks, to understand network based programming methodologies, languages, tools and standards and to also  understand the design and development of an end-to-end network-based application.
 
-It is an academic project to demonstrate the protocols that support computer communication networks, to understand network based programming methodologies, languages, tools and standards, to understand the design and development of an end-to-end network-based application and create web-based artifacts with practical, personal or societal intent.
+## Screenshots
 
-This project uses node.js and mongoDB technology.
+Login Page             |Home Page             |
+:-------------------------:|:-------------------------:
+![](Screenshots/capture5.png)  |  ![](Screenshots/capture2.png)
 
-Dependencies:
+Categories Page           | Detail Page             | My Cart Page
+:-------------------------:|:-------------------------:|:-------------------------:
+![](Screenshots/capture3.png)  | ![](Screenshots/capture4.png) | ![](Screenshots/capture1.png)
+
+## **Technologies:**
+* Node.js
+* MongoDB
+* ExpressJS
+## Getting Started
+
+### Prerequisites
+Atom IDE [Download here](https://atom.io/)
+
+### Dependencies:
 body-parser 1.18.3
 ejs 2.6.1
 express 4.16.4
@@ -15,7 +30,8 @@ express-validator 5.3.1
 express-sanitizer 1.0.5
 mongoose 5.4.22
 
-Instructions to Run
-Download the whole repository
-Install all dependencies.
-Create a mongoDb schema and collections for storing the data used in the website.
+### Installing
+1. Clone the repository in Atom IDE.
+2. Install all dependencies.
+3. Create a mongoDb schema and collections for storing the data used in the website.
+4. Run the application.
